@@ -1,0 +1,32 @@
+CREATE TABLE Fruit_Stand (id INTEGER PRIMARY KEY, name TEXT, section TEXT, price REAL, inventory INTEGER);
+
+INSERT INTO Fruit_Stand VALUES (1, "Apples", "top", 1.31, 23);
+INSERT INTO Fruit_Stand VALUES (2, "Bananas", "middle", 0.63, 42);
+INSERT INTO Fruit_Stand VALUES (3, "Pears", "top", 1.22, 7);
+INSERT INTO Fruit_Stand VALUES (4, "Lemons", "bottom", 0.68, 13);
+INSERT INTO Fruit_Stand VALUES (5, "Oranges", "bottom", 1.52, 15);
+INSERT INTO Fruit_Stand VALUES (6, "Mangoes", "top", 1.50, 6);
+INSERT INTO Fruit_Stand VALUES (7, "Watermelon", "middle", 8, 9);
+INSERT INTO Fruit_Stand VALUES (8, "Plums", "top", 0.83, 72);
+INSERT INTO Fruit_Stand VALUES (9, "Grapes", "bottom", 2.78, 62);
+INSERT INTO Fruit_Stand VALUES (10, "Cherries", "top", 8.99, 16);
+INSERT INTO Fruit_Stand VALUES (11, "Strawberries", "top", 3.35, 56);
+INSERT INTO Fruit_Stand VALUES (12, "Kiwi", "bottom", 0.56, 16);
+INSERT INTO Fruit_Stand VALUES (13, "Apricots", "middle", 0.76, 18);
+INSERT INTO Fruit_Stand VALUES (14, "Cranberries", "bottom", 1.98, 8);
+INSERT INTO Fruit_Stand VALUES (15, "Peaches", "middle", 0.79, 82);
+
+--display all items from least expensive to most expensive.
+SELECT * FROM Fruit_Stand GROUP BY Price;
+
+--display total inventory count.
+SELECT SUM(inventory) AS total_inventory FROM Fruit_Stand;
+
+--display items ordered by section.
+SELECT * FROM Fruit_Stand
+ORDER BY section;
+
+--what is the average price of items in the middle section?
+SELECT AVG(price) AS average_price_of_middle_section
+FROM fruit_stand
+WHERE section = "middle";
