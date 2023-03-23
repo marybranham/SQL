@@ -1,0 +1,63 @@
+CREATE TABLE singers (id INTEGER PRIMARY KEY,
+full_name TEXT,
+birth_date TEXT,
+birth_place TEXT,
+albums_released INTEGER);
+
+INSERT INTO singers 
+VALUES (1, "Harry Styles", "02/01/1994", "Worcesterchire, England", 4);
+INSERT INTO singers
+VALUES (2, "Taylor Swift", "12/13/1989", "Pennsylvania, USA", 10);
+INSERT INTO singers
+VALUES (3, "Elton John", "03/25/1947", "Middlesex, England", 78);
+INSERT INTO singers
+VALUES (4, "Brandi Carlile", "06/01/1981", "Washington, USA", 9);INSERT INTO singers
+VALUES (5, "Lady Gaga", "03/28/1986", "New York, USA", 20);
+INSERT INTO singers
+VALUES (6, "Freddie Mercury", "09/05/1946", "Zanzibar City, Tanzania", 12);INSERT INTO singers
+VALUES (7, "Selena Gomez", "07/22/1992", "Texas, USA", 5);
+INSERT INTO singers
+VALUES (8, "Meghan Trainor", "12/22/1993", "Massachusetts, USA", 10);
+INSERT INTO singers
+VALUES (9, "Adele", "05/05/1988", "London, England", 5);INSERT INTO singers
+VALUES (10, "Ed Sheeran", "02/17/1991", "West Yorkshire, England", 6);
+INSERT INTO singers
+VALUES (11, "Sabrina Carpenter", "05/11/1999", "Pennsylvania, USA", 10);
+INSERT INTO singers
+VALUES (12, "Ariana Grande", "06/26/1993", "Florida, USA", 9);
+INSERT INTO singers
+VALUES (13, "Miley Cyrus", "11/23/1992", "Tennessee, USA", 11);
+INSERT INTO singers
+VALUES (14, "Shawn Mendes", "08/08/1998", "Ontario, Canada", 8);
+INSERT INTO singers
+VALUES (15, "Niall Horan", "09/13/1993", "Mullingar, Ireland", 3);
+
+SELECT * FROM singers;
+
+CREATE TABLE Grammys (id INTEGER PRIMARY KEY,
+singer_id INTEGER,
+Grammy_nominations INTEGER,
+Grammy_wins INTEGER);
+
+INSERT INTO Grammys (singer_id, Grammy_nominations, Grammy_wins) VALUES (1, 9, 3);
+INSERT INTO Grammys (singer_id, Grammy_nominations, Grammy_wins) VALUES (2, 46, 12);
+INSERT INTO Grammys (singer_id, Grammy_nominations, Grammy_wins) VALUES (3, 35,5);
+INSERT INTO Grammys (singer_id, Grammy_nominations, Grammy_wins) VALUES (4, 24, 9);
+INSERT INTO Grammys (singer_id, Grammy_nominations, Grammy_wins) VALUES (5, 36, 13);
+INSERT INTO Grammys (singer_id, Grammy_nominations, Grammy_wins) VALUES (6, 4, 0);
+INSERT INTO Grammys (singer_id, Grammy_nominations, Grammy_wins) VALUES (7, 2, 0);
+INSERT INTO Grammys (singer_id, Grammy_nominations, Grammy_wins) VALUES (8, 3, 1);
+INSERT INTO Grammys (singer_id, Grammy_nominations, Grammy_wins) VALUES (9, 25, 16);
+INSERT INTO Grammys (singer_id, Grammy_nominations, Grammy_wins) VALUES (10, 16, 4);
+INSERT INTO Grammys (singer_id, Grammy_nominations, Grammy_wins) VALUES (11, 0, 0);
+INSERT INTO Grammys (singer_id, Grammy_nominations, Grammy_wins) VALUES (12, 15, 2);
+INSERT INTO Grammys (singer_id, Grammy_nominations, Grammy_wins) VALUES (13, 2, 0);
+INSERT INTO Grammys (singer_id, Grammy_nominations, Grammy_wins) VALUES (14, 3, 0);
+INSERT INTO Grammys (singer_id, Grammy_nominations, Grammy_wins) VALUES (15, 0, 0);
+
+SELECT * FROM Grammys;
+
+SELECT singers.full_name, singers.albums_released, Grammys.Grammy_nominations, Grammys.Grammy_wins
+FROM singers
+JOIN Grammys
+ON singers.id = Grammys.singer_id;
