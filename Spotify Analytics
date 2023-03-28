@@ -1,0 +1,69 @@
+--For this project, I downloaded Spotify data from Kaggle.
+--Then I created a table in SQLite to insert Spotify data into.
+--Finally, I performed analytics on the data using SQL. 
+
+--Table Created:
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+song_key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+song_mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness decimal(8,7) NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL );
+
+
+--Then imported download data from kaggle. The data consisted of the top 50 listened to songs on Spotify in 2021.
+--Below are sample questions to explore the data:
+
+--1. Are there reocurring artists? If so, who?
+SELECT artist_name, COUNT(artist_name) AS total
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+ORDER BY COUNT(artist_name) desc;
+
+--2. What are the top five songs according to popularity?
+SELECT artist_name, track_name, popularity
+FROM BIT_DB.Spotifydata
+ORDER BY popularity asc
+LIMIT 5;
+
+--3. What is the average liveness?
+SELECT AVG(liveness)
+FROM BIT_DB.Spotifydata;
+
+--4. Do each of the top 10 most popular songs fall above or below the average liveness?
+SELECT artist_name, track_name,
+    CASE
+        WHEN liveness > 0.182292 THEN 'above average'
+        WHEN liveness < 0.182292 THEN 'below average'
+        ELSE 'average'
+    END as 'liveness_avg'
+FROM BIT_DB.Spotifydata
+GROUP BY track_name
+ORDER BY popularity asc
+LIMIT 10;
+
+--5. What is the average, minimum and maximum danceability?
+SELECT AVG(danceability), MIN(danceability), MAX(danceability) 
+FROM BIT_DB.Spotifydata;
+
+--6. What is the average danceability of the top 5 most popular songs?
+SELECT avg(danceability)
+FROM BIT_DB.Spotifydata
+WHERE popularity < 79;
+
+--7. Who released the shortest track?
+SELECT artist_name, track_name, min(duration_ms)
+FROM BIT_DB.Spotifydata;
