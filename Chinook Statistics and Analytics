@@ -1,0 +1,86 @@
+--Below is sample SQL used to query a database consisting of sales, employee, customer, and product data.
+
+--1. List fax numbers with customers who have one.
+SELECT CustomerID, FirstName, LastName, Fax
+FROM chinook.customers
+WHERE fax <> 'NULL';
+
+--2. List customer ids, names, and address information for South American customers only.
+--First, I queried a list of countries:
+SELECT distinct Country
+FROM chinook.customers;
+--then wrote down which ones are in South America (Brazil, Argentina, Chile) and applied that information to a final query:
+SELECT CustomerID,
+FirstName, LastName,
+Address, City, State, Country, PostalCode
+FROM chinook.customers
+WHERE Country IN('Brazil', 'Argentina', 'Chile');
+
+--3. Show the employees who work in IT.
+SELECT * FROM chinook.employees
+WHERE title LIKE '%IT%';
+
+--4. Show the invoice total for each customer, their name, and Sales Agent.
+SELECT sum(inv.total) AS 'InvoiceTotals', cust.FirstName AS 'CustFirstName', cust.LastName AS 'CustLastName', emp.FirstName AS 'EmpFirstName', emp.LastName AS 'EmpLastName'
+FROM chinook.invoices inv
+JOIN chinook.customers cust
+ON inv.CustomerId = cust.CustomerId
+JOIN chinook.employees emp
+ON emp.EmployeeId = cust.SupportRepId
+GROUP BY CustLastName;
+
+--5. List how many customers each sales agent sold to.
+SELECT emp.employeeID, emp.FirstName, emp.LastName, COUNT(cust.SupportRepId)
+FROM chinook.employees emp
+JOIN chinook.customers cust
+ON cust.SupportRepID = emp.employeeID
+GROUP BY SupportRepID;
+
+--6. What are the total sales for 2013?
+SELECT ROUND(SUM(Total), 2)
+FROM chinook.invoices
+WHERE InvoiceDate BETWEEN '2013-01-01' AND '2013-12-31';
+
+--7. List the invoice line ids with purchased track name, artist, and album.
+SELECT i.InvoiceLineId, t.Name as Track, ar.Name as Artist, a.Title AS Album
+FROM chinook.invoice_items i
+LEFT JOIN chinook.tracks t
+ON i.TrackId=t.Trackid
+JOIN chinook.albums a
+ON a.AlbumId=t.AlbumId
+JOIN chinook.artists ar
+ON ar.ArtistId=a.ArtistId
+;
+
+--8. Provide a query that shows all the tracks, and include the Album name, Media type, and Genre. 
+SELECT t.Name, a.Title AS Album, t.MediaTypeId AS Media_Type, g.Name AS Genre
+FROM chinook.tracks t
+JOIN chinook.albums a
+ON t.AlbumId=a.AlbumId
+JOIN chinook.genres g
+ON t.GenreId=g.GenreId;
+
+--9. LIst the total sales for each sales agent.
+SELECT e.FirstName AS 'First Name', 
+e.LastName as 'Last Name',
+ROUND(SUM(i.Total), 2) as 'Total Sales'
+FROM chinook.invoices i
+JOIN chinook.customers c
+ON i.customerid=c.customerid
+JOIN chinook.employees e
+ON c.supportrepid=e.employeeid
+GROUP BY e.FirstName;
+
+--10. Which sales agent made the most money in sales in 2010?
+SELECT e.FirstName AS 'First Name', 
+e.LastName as 'Last Name',
+ROUND(SUM(i.Total), 2) as 'Total Sales'
+FROM chinook.invoices i
+JOIN chinook.customers c
+ON i.customerid=c.customerid
+JOIN chinook.employees e
+ON c.supportrepid=e.employeeid
+WHERE i.invoicedate LIKE '2010%'
+GROUP BY e.FirstName
+ORDER BY ROUND(SUM(i.Total), 2) desc
+LIMIT 1;
