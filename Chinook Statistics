@@ -60,7 +60,7 @@ ON t.AlbumId=a.AlbumId
 JOIN chinook.genres g
 ON t.GenreId=g.GenreId;
 
---9. LIst the total sales for each sales agent.
+--9. List the total sales for each sales agent.
 SELECT e.FirstName AS 'First Name', 
 e.LastName as 'Last Name',
 ROUND(SUM(i.Total), 2) as 'Total Sales'
