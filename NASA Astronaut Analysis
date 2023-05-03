@@ -385,28 +385,26 @@ tani-2009 commented on Aug 27, 2020*/
 
 
 
-SELECT * FROM astronauts;
-
---how many astronauts in database?
+--1. How many astronauts are in the database?
 SELECT COUNT (*) FROM astronauts;
 
---average space walk time
+--2. What is the average length of a space walk?
 SELECT AVG(Space_Walks_hr) AS average_space_walk_time FROM astronauts;
 
---maximum space flights taken
+--3. What is the most space flights taken by an astronaut?
 SELECT MAX(Space_Flights) AS maximum_space_flights FROM astronauts;
 
---who had the least amount of space walks?
+--4. Who had the least amount of space walks?
 SELECT name, Space_Walks FROM astronauts
 WHERE Space_Walks < 1;
 
---Which graduate majors produced at least 5 space flights?
+--5. Which graduate majors produced at least 5 space flights?
 SELECT Graduate_Major, Space_Flights FROM astronauts
 GROUP BY Graduate_Major
 HAVING Space_Flights >= 5
 ORDER BY Space_Flights;
 
---Which astronauts had the average amount of space walks, and who was above and below the average? 
+--6. Which astronauts had the average amount of space walks, and who was above and below the average? 
 SELECT ROUND(AVG(Space_Flights)) AS average_space_flights FROM astronauts;
 SELECT name,
     CASE
@@ -417,7 +415,7 @@ SELECT name,
 FROM astronauts
 ORDER BY Space_Flight_Averages;
 
---list active female astronauts
+--7. list active female astronauts
 SELECT name FROM astronauts
 WHERE gender = "Female"
 AND Status = "Active";
